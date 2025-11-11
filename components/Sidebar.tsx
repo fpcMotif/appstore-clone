@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { navItems, categories } from '../constants';
 import type { NavItem, CategoryItem } from '../types';
@@ -9,7 +8,11 @@ const AppStoreIcon: React.FC = () => (
     </svg>
 );
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  activeRoute: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ activeRoute }) => {
     return (
         <aside className="hidden md:block w-60 h-screen sticky top-0 bg-[#f5f5f7] border-r border-gray-300/80 px-4 py-8">
              <div className="flex items-center gap-3 mb-8">
@@ -18,21 +21,24 @@ const Sidebar: React.FC = () => {
             <nav className="space-y-6">
                 <div>
                     <ul className="space-y-1">
-                        {navItems.map((item: NavItem) => (
-                            <li key={item.name}>
-                                <a
-                                    href={item.link}
-                                    className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                                        item.isActive
-                                            ? 'bg-gray-200/80 text-gray-900'
-                                            : 'text-gray-600 hover:bg-gray-200/50'
-                                    }`}
-                                >
-                                    <span className="w-6 h-6 mr-3 text-gray-500">{item.icon}</span>
-                                    <span>{item.name}</span>
-                                </a>
-                            </li>
-                        ))}
+                        {navItems.map((item: NavItem) => {
+                            const isActive = item.link === activeRoute;
+                            return (
+                                <li key={item.name}>
+                                    <a
+                                        href={item.link}
+                                        className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                            isActive
+                                                ? 'bg-gray-200/80 text-gray-900'
+                                                : 'text-gray-600 hover:bg-gray-200/50'
+                                        }`}
+                                    >
+                                        <span className="w-6 h-6 mr-3 text-gray-500">{item.icon}</span>
+                                        <span>{item.name}</span>
+                                    </a>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
 
@@ -41,14 +47,21 @@ const Sidebar: React.FC = () => {
                         Categories
                     </h3>
                     <ul className="space-y-1">
-                        {categories.map((category: CategoryItem) => (
-                            <li key={category.name}>
-                                <a href={category.link} className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-200/50 transition-colors">
-                                    <img src={category.iconUrl} alt="" className="w-6 h-6 mr-3 rounded-md" />
-                                    <span>{category.name}</span>
-                                </a>
-                            </li>
-                        ))}
+                        {categories.map((category: CategoryItem) => {
+                            const isActive = activeRoute === category.link;
+                            return (
+                                <li key={category.name}>
+                                    <a href={category.link} className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                        isActive
+                                            ? 'bg-gray-200/80 text-gray-900'
+                                            : 'text-gray-600 hover:bg-gray-200/50'
+                                    }`}>
+                                        <img src={category.iconUrl} alt="" className="w-6 h-6 mr-3 rounded-md" />
+                                        <span>{category.name}</span>
+                                    </a>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </nav>
