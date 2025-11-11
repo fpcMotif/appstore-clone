@@ -6,16 +6,30 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "bun x ultracite check",
+    "lint:fix": "bun x ultracite fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,jsonc,css,scss,md,mdx}": [
+      "bun x ultracite fix"
+    ]
   },
   "dependencies": {
     "react-dom": "^19.2.0",
     "react": "^19.2.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.4",
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "tailwindcss": "^4.1.17",
     "typescript": "~5.8.2",
+    "ultracite": "6.3.2",
     "vite": "^6.2.0"
   }
 }

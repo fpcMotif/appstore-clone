@@ -1,20 +1,29 @@
-import React from 'react';
-import type { CategoryLinkData } from '../types';
+import type React from "react";
+import type { CategoryLinkData } from "../types";
 
-interface CategoryLinkCardProps {
-    data: CategoryLinkData;
-}
+type CategoryLinkCardProps = {
+  data: CategoryLinkData;
+};
 
-const CategoryLinkCard: React.FC<CategoryLinkCardProps> = ({ data }) => {
-    return (
-        <li className="snap-start">
-            <a href={data.link} className="block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 relative aspect-video">
-                <img src={data.imageUrl} alt={data.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <h3 className="absolute bottom-3 left-4 text-white font-bold text-lg">{data.name}</h3>
-            </a>
-        </li>
-    );
-}
+const CategoryLinkCard: React.FC<CategoryLinkCardProps> = ({ data }) => (
+  <li className="snap-start">
+    <a
+      className="relative block aspect-video overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg"
+      href={data.link}
+    >
+      <img
+        alt={data.name}
+        className="h-full w-full object-cover"
+        height={160}
+        src={data.imageUrl}
+        width={284}
+      />
+      <div className="absolute inset-0 bg-black/20" />
+      <h3 className="absolute bottom-3 left-4 font-bold text-lg text-white">
+        {data.name}
+      </h3>
+    </a>
+  </li>
+);
 
 export default CategoryLinkCard;

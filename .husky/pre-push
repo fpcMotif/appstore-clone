@@ -1,0 +1,11 @@
+#!/bin/sh
+# Exit on any error
+set -e
+
+echo "🔨 Running build before push..."
+
+# Run build command
+bun run build
+
+echo "✅ Build completed successfully!"
+

@@ -1,30 +1,44 @@
-import React from 'react';
-import type { SmallLockupData } from '../types';
+import type React from "react";
+import type { SmallLockupData } from "../types";
 
-interface SmallLockupCardProps {
-    data: SmallLockupData;
-}
-
-const SmallLockupCard: React.FC<SmallLockupCardProps> = ({ data }) => {
-    return (
-        <li className="snap-start">
-            <a href={data.link} className="flex items-center space-x-4 group">
-                {data.ordinal && <div className="text-2xl font-bold text-gray-400 w-8 text-center">{data.ordinal}</div>}
-                <div className="flex-shrink-0">
-                    <img src={data.iconUrl} alt={`${data.name} icon`} className="w-16 h-16 rounded-2xl" style={{ backgroundColor: data.bgColor }} />
-                </div>
-                <div className="flex-1 min-w-0">
-                    <p className="font-semibold truncate text-black group-hover:text-blue-600">{data.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{data.subtitle}</p>
-                </div>
-                <div className="flex-shrink-0">
-                    <button className="px-5 py-1.5 rounded-full text-sm font-semibold text-blue-600 bg-gray-100 group-hover:bg-gray-200 transition">
-                        View
-                    </button>
-                </div>
-            </a>
-        </li>
-    );
+type SmallLockupCardProps = {
+  data: SmallLockupData;
 };
+
+const SmallLockupCard: React.FC<SmallLockupCardProps> = ({ data }) => (
+  <li className="snap-start">
+    <a className="group flex items-center space-x-4" href={data.link}>
+      {data.ordinal && (
+        <div className="w-8 text-center font-bold text-2xl text-gray-400">
+          {data.ordinal}
+        </div>
+      )}
+      <div className="flex-shrink-0">
+        <img
+          alt={`${data.name} icon`}
+          className="h-16 w-16 rounded-2xl"
+          height={64}
+          src={data.iconUrl}
+          style={{ backgroundColor: data.bgColor }}
+          width={64}
+        />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="truncate font-semibold text-black group-hover:text-blue-600">
+          {data.name}
+        </p>
+        <p className="truncate text-gray-500 text-xs">{data.subtitle}</p>
+      </div>
+      <div className="flex-shrink-0">
+        <button
+          className="rounded-full bg-gray-100 px-5 py-1.5 font-semibold text-blue-600 text-sm transition group-hover:bg-gray-200"
+          type="button"
+        >
+          View
+        </button>
+      </div>
+    </a>
+  </li>
+);
 
 export default SmallLockupCard;
