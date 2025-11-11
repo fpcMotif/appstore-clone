@@ -13,7 +13,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({ data }) => {
     return (
       <li className="w-full flex-shrink-0 snap-start">
         <a
-          className="hover:-translate-y-1 relative block aspect-[1.8] transform overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-2xl md:aspect-[2.5] lg:aspect-[2.8]"
+          className="hover:-translate-y-[var(--transform-hover-lift)] relative block aspect-spotlight transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-[var(--transition-ease-in-out)] hover:shadow-[var(--shadow-card-hover)] md:aspect-spotlight-md lg:aspect-spotlight-lg"
           href={data.link}
           style={{ backgroundColor: data.accentColor }}
         >
@@ -57,7 +57,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({ data }) => {
   return (
     <li className="w-full flex-shrink-0 snap-start">
       <a
-        className="hover:-translate-y-1 relative block aspect-[1.8] transform overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-2xl md:aspect-[2.5] lg:aspect-[2.8]"
+        className="hover:-translate-y-[var(--transform-hover-lift)] relative block aspect-spotlight transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-[var(--transition-ease-in-out)] hover:shadow-[var(--shadow-card-hover)] md:aspect-spotlight-md lg:aspect-spotlight-lg"
         href={data.link}
         style={{ backgroundColor: data.accentColor }}
       >

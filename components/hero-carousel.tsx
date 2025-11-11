@@ -84,6 +84,8 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ items }) => {
   // Fix: Replace Node-specific type with a portable type to resolve namespace error.
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const AUTO_SCROLL_INTERVAL = 5000;
+
   const resetTimeout = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -109,7 +111,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ items }) => {
     resetTimeout();
     timeoutRef.current = setTimeout(
       () => scrollToIndex((activeIndex + 1) % items.length),
-      5000
+      AUTO_SCROLL_INTERVAL
     );
 
     return () => {

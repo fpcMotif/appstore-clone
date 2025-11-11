@@ -12,30 +12,60 @@ const AppLockup: React.FC<AppLockupProps> = ({
   theme,
   bgColor,
 }) => {
-  const buttonThemeClasses =
+  const buttonStyle =
     theme === "dark"
-      ? "bg-white/20 text-white hover:bg-white/30"
-      : "bg-gray-200/80 text-blue-600 font-semibold hover:bg-gray-300/90";
+      ? {
+          backgroundColor: "var(--color-text-light)",
+          color: "var(--color-text-primary)",
+          opacity: 0.2,
+        }
+      : {
+          backgroundColor: "var(--color-background-disabled)",
+          color: "var(--color-link)",
+        };
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center" style={{ gap: "var(--spacing-md)" }}>
       <div className="flex-shrink-0">
         <img
           alt={`${name} icon`}
-          className="h-12 w-12 rounded-xl"
           height="48"
           src={iconUrl}
-          style={{ backgroundColor: bgColor }}
+          style={{
+            height: "var(--size-app-icon)",
+            width: "var(--size-app-icon)",
+            borderRadius: "var(--radius-xl)",
+            backgroundColor: bgColor,
+          }}
           width="48"
         />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold text-sm">{name}</p>
-        <p className="truncate text-xs opacity-80">{subtitle}</p>
+        <p
+          className="truncate font-semibold"
+          style={{ fontSize: "var(--size-3)" }}
+        >
+          {name}
+        </p>
+        <p
+          className="truncate"
+          style={{ fontSize: "var(--size-2)", opacity: 0.8 }}
+        >
+          {subtitle}
+        </p>
       </div>
       <div className="flex-shrink-0">
         <button
-          className={`rounded-full px-5 py-2 text-sm transition ${buttonThemeClasses}`}
+          className="font-semibold transition-fast"
+          style={{
+            borderRadius: "9999px",
+            paddingLeft: "var(--spacing-button-padding)",
+            paddingRight: "var(--spacing-button-padding)",
+            paddingTop: "var(--spacing-sm)",
+            paddingBottom: "var(--spacing-sm)",
+            fontSize: "var(--size-3)",
+            ...buttonStyle,
+          }}
           type="button"
         >
           View

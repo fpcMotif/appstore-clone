@@ -4,7 +4,7 @@ import type { CategoryItem, NavItem } from "../types";
 
 const AppStoreIcon: React.FC = () => (
   <svg
-    className="text-black/90"
+    className="text-[var(--color-text-secondary)]/90"
     height="21"
     viewBox="0 0 121 21"
     width="121"
@@ -25,26 +25,29 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ activeRoute }) => (
-  <aside className="sticky top-0 hidden h-screen w-60 border-gray-300/80 border-r bg-[#f5f5f7] px-4 py-8 md:block">
-    <div className="mb-8 flex items-center gap-3">
+  <aside className="sticky top-0 hidden h-screen w-[var(--size-sidebar-width)] border-[var(--color-outline)]/80 border-r bg-[var(--color-background)] px-[var(--spacing-4)] py-[var(--spacing-8)] md:block">
+    <div className="mb-[var(--spacing-lg)] flex items-center gap-[var(--spacing-sm)]">
       <AppStoreIcon />
     </div>
-    <nav className="space-y-6">
+    <nav
+      className="space-y-[var(--spacing-xl)]"
+      style={{ gap: "var(--spacing-xl)" }}
+    >
       <div>
-        <ul className="space-y-1">
+        <ul className="space-y-1" style={{ gap: "var(--spacing-md)" }}>
           {navItems.map((item: NavItem) => {
             const isActive = item.link === activeRoute;
             return (
               <li key={item.name}>
                 <a
-                  className={`flex items-center rounded-md px-3 py-2 font-medium text-sm transition-colors ${
+                  className={`flex items-center rounded-[var(--radius-md)] px-[var(--spacing-3)] py-[var(--spacing-2)] font-[var(--font-weight-medium)] text-[var(--font-size-sm)] transition-colors ${
                     isActive
-                      ? "bg-gray-200/80 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-200/50"
+                      ? "bg-[var(--color-background-disabled)]/80 text-[var(--color-text-primary)]"
+                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-background-disabled)]/50"
                   }`}
                   href={item.link}
                 >
-                  <span className="mr-3 h-6 w-6 text-gray-500">
+                  <span className="mr-[var(--spacing-md)] h-[var(--spacing-6)] w-[var(--spacing-6)] text-[var(--color-text-secondary)]">
                     {item.icon}
                   </span>
                   <span>{item.name}</span>
@@ -55,26 +58,26 @@ const Sidebar: React.FC<SidebarProps> = ({ activeRoute }) => (
         </ul>
       </div>
 
-      <div className="border-gray-300/80 border-t pt-6">
-        <h3 className="mb-2 px-3 font-semibold text-gray-500 text-xs uppercase tracking-wider">
+      <div className="border-[var(--color-outline)]/80 border-t pt-[var(--spacing-lg)]">
+        <h3 className="mb-[var(--spacing-sm)] px-[var(--spacing-3)] font-[var(--font-weight-semibold)] text-[var(--color-text-secondary)] text-[var(--font-size-xs)] uppercase tracking-[var(--letter-spacing-wide)]">
           Categories
         </h3>
-        <ul className="space-y-1">
+        <ul className="space-y-1" style={{ gap: "var(--spacing-md)" }}>
           {categories.map((category: CategoryItem) => {
             const isActive = activeRoute === category.link;
             return (
               <li key={category.name}>
                 <a
-                  className={`flex items-center rounded-md px-3 py-2 font-medium text-sm transition-colors ${
+                  className={`flex items-center rounded-[var(--radius-md)] px-[var(--spacing-3)] py-[var(--spacing-2)] font-[var(--font-weight-medium)] text-[var(--font-size-sm)] transition-colors ${
                     isActive
-                      ? "bg-gray-200/80 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-200/50"
+                      ? "bg-[var(--color-background-disabled)]/80 text-[var(--color-text-primary)]"
+                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-background-disabled)]/50"
                   }`}
                   href={category.link}
                 >
                   <img
                     alt=""
-                    className="mr-3 h-6 w-6 rounded-md"
+                    className="mr-[var(--spacing-md)] h-[var(--spacing-6)] w-[var(--spacing-6)] rounded-[var(--radius-md)]"
                     height={24}
                     src={category.iconUrl}
                     width={24}

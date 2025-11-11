@@ -16,13 +16,30 @@ const Arrow: React.FC<{
 }> = ({ direction, onClick, disabled }) => (
   <button
     aria-label={direction === "left" ? "Scroll left" : "Scroll right"}
-    className={`-translate-y-1/2 absolute top-1/2 z-10 h-12 w-8 rounded-md bg-gray-200/50 backdrop-blur-sm transition-opacity duration-300 hover:bg-gray-300/80 ${direction === "left" ? "-left-4" : "-right-4"} ${disabled ? "cursor-default opacity-0" : "opacity-100"}`}
+    className="absolute z-10 flex items-center justify-center backdrop-blur transition-fast"
     disabled={disabled}
     onClick={onClick}
+    style={{
+      top: "50%",
+      transform: "translateY(var(--transform-arrow-center))",
+      height: "var(--size-medium-icon)",
+      width: "var(--size-small-icon)",
+      borderRadius: "var(--radius-card)",
+      left: direction === "left" ? "var(--transform-arrow-left)" : "auto",
+      right: direction === "right" ? "var(--transform-arrow-right)" : "auto",
+      opacity: disabled ? 0 : 1,
+      boxShadow: "var(--shadow-xl)",
+      backgroundColor: "var(--color-background-disabled)",
+    }}
     type="button"
   >
     <svg
-      className={`mx-auto h-4 w-2 text-gray-700 ${direction === "right" ? "rotate-180 transform" : ""}`}
+      className={`mx-auto ${direction === "right" ? "rotate-180 transform" : ""}`}
+      style={{
+        height: "var(--size-4)",
+        width: "var(--size-2)",
+        color: "var(--color-text-secondary)",
+      }}
       viewBox="0 0 9 31"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -39,6 +56,7 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
   children,
   contentClassName = "flex space-x-6",
 }) => {
+  const SCROLL_PERCENTAGE = 0.8;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -68,7 +86,7 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth * 0.8;
+      const scrollAmount = clientWidth * SCROLL_PERCENTAGE;
       const newScrollLeft =
         direction === "left"
           ? scrollLeft - scrollAmount
@@ -80,17 +98,31 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
   return (
     <section>
       {(title || subtitle) && (
-        <div className="mb-4 flex items-end justify-between">
+        <div
+          className="flex items-end justify-between"
+          style={{ marginBottom: "var(--spacing-md)" }}
+        >
           <div>
             {title && (
-              <h2 className="font-bold text-2xl text-black">{title}</h2>
+              <h2
+                className="font-bold"
+                style={{
+                  fontSize: "var(--size-6)",
+                  color: "var(--color-text-primary)",
+                }}
+              >
+                {title}
+              </h2>
             )}
-            {subtitle && <p className="text-gray-500">{subtitle}</p>}
+            {subtitle && (
+              <p style={{ color: "var(--color-text-secondary)" }}>{subtitle}</p>
+            )}
           </div>
           {seeAllLink && (
             <a
-              className="font-semibold text-blue-600 text-sm hover:underline"
+              className="link font-semibold"
               href={seeAllLink}
+              style={{ fontSize: "var(--size-3)" }}
             >
               See All
             </a>
@@ -99,8 +131,12 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
       )}
       <div className="group relative">
         <div
-          className={`scrollbar-hide -mb-2 snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2 ${contentClassName}`}
+          className={`scrollbar-hide snap-x snap-mandatory overflow-x-auto scroll-smooth ${contentClassName}`}
           ref={scrollRef}
+          style={{
+            marginBottom: "calc(var(--spacing-sm) * -1)",
+            paddingBottom: "var(--spacing-sm)",
+          }}
         >
           {children}
         </div>

@@ -27,7 +27,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ data }) => {
   return (
     <li className="w-full flex-shrink-0 snap-start space-y-3">
       <a
-        className="block overflow-hidden rounded-xl shadow-md transition-shadow duration-300 hover:shadow-xl"
+        className="block overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-md)] transition-all duration-[var(--transition-normal)] ease-in-out hover:shadow-[var(--shadow-xl)]"
         href={data.link}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

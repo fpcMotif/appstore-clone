@@ -8,7 +8,7 @@ type EditorialCardProps = {
 const EditorialCard: React.FC<EditorialCardProps> = ({ data }) => (
   <section>
     <a
-      className="hover:-translate-y-1 block transform overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+      className="hover:-translate-y-[var(--transform-hover-lift)] block transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-in-out hover:shadow-[var(--shadow-card-hover)]"
       href={data.link}
     >
       <div
@@ -18,10 +18,9 @@ const EditorialCard: React.FC<EditorialCardProps> = ({ data }) => (
         <div className="mr-6 flex-shrink-0">
           <img
             alt={data.appInfo.name}
-            className="h-32 w-32 rounded-3xl"
+            className="h-[var(--size-large-icon)] w-[var(--size-large-icon)] rounded-3xl"
             height={128}
             src={data.appInfo.iconUrl}
-            style={{ backgroundColor: data.appInfo.bgColor }}
             width={128}
           />
         </div>
