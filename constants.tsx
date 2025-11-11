@@ -546,17 +546,62 @@ export const productivityPageData: { title: string; shelves: CategoryShelf[] } =
     ]
 };
 
+export const healthFitnessPageData: { title: string; shelves: CategoryShelf[] } = {
+    title: 'Health & Fitness',
+    shelves: [
+        {
+            id: 'hf-spotlight',
+            type: 'spotlight',
+            items: [
+                { id: 'hf-spot-1', layout: 'west', badge: 'FEATURED', title: 'Find Support With Untangle Grief', subtitle: 'Wellness tools to help you cope', imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/71/be/74/71be7483-39dd-b8d2-ae28-d0c8a758d51d/c5d66aa6-5d60-4947-8c9d-7851a70a4838.png/1600x573sr.webp', accentColor: 'rgb(252,236,218)', theme: 'light', link: '#', appInfo: { iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/5b/64/17/5b6417b8-0e92-93f9-8e63-8232167172ed/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/64x64ia-75.webp', name: 'Untangle: Grief Support', subtitle: 'Community, help & advice', link: '#', bgColor: 'rgb(251,166,48)' } },
+                { id: 'hf-spot-2', layout: 'west', badge: 'TRY SOMETHING NEW', title: 'Limit Screen Time With OffScreen', subtitle: 'Protect your mental health', imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features116/v4/b3/37/39/b3373950-d430-7572-d95d-4ced37e2e028/a461baf6-b6dc-4bfb-bbd6-423787135a69.png/1600x573sr.webp', accentColor: 'rgb(244,194,187)', theme: 'light', link: '#', appInfo: { iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/6a/04/a7/6a04a723-81e6-3eac-7d79-3efbbf50adfa/Placeholder.mill/64x64bb-75.webp', name: 'OffScreen: Screen Time Control', subtitle: 'App blocker for focus', link: '#', bgColor: 'rgb(251,231,215)' } },
+                { id: 'hf-spot-3', layout: 'west', badge: 'NEW APP', title: 'Track Naps With Sleep Cycle Kids', subtitle: 'Monitor your baby’s patterns', imageUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/5d/aa/97/5daa97c8-881a-e743-c25d-69143fa47051/b66731a8-9bb2-4ec2-8238-84d5f6253fc1.png/1600x573sr.webp', accentColor: 'rgb(49,56,56)', theme: 'dark', link: '#', appInfo: { iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/cf/9c/58/cf9c58d2-63da-ec71-362e-a1a1e765ef63/AppIcon-0-1x_U007ephone-0-0-0-0-0-85-220-0.jpeg/64x64ia-75.webp', name: 'Baby Monitor by Sleep Cycle', subtitle: 'Nap Schedule, Tracker & Sounds', link: '#', bgColor: 'rgb(255,149,0)' } }
+            ]
+        },
+        {
+            id: 'essential-hf-apps',
+            type: 'small-lockup-grid',
+            title: 'Essential Health & Fitness Apps',
+            subtitle: 'Selected by App Store editors',
+            seeAllLink: '#',
+            items: [
+                { id: 'hf-ess-1', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/bf/8c/98/bf8c98bf-f587-a284-d826-1138d5000f14/Placeholder.mill/64x64bb-75.webp', name: 'Stretching Mobility: STRETCHIT', subtitle: 'Stretch, Flexibility, Splits', link: '#', bgColor: 'rgb(253,253,253)' },
+                { id: 'hf-ess-2', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a9/02/5b/a9025be7-97ad-d902-d1eb-a4fef0652a43/Placeholder.mill/64x64bb-75.webp', name: 'Yuka - Food & Cosmetic Scanner', subtitle: "Check What's in Your Products", link: '#', bgColor: 'rgb(253,253,253)' },
+                { id: 'hf-ess-3', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/de/87/36/de873621-8dc7-3328-50d8-198ed7e2f040/AppIcon-Branded-0-0-1x_U007emarketing-0-7-0-85-220.png/64x64ia-75.webp', name: 'The Underbelly', subtitle: 'Inclusive yoga, anytime.', link: '#', bgColor: 'rgb(247,228,203)' },
+                { id: 'hf-ess-4', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/31/af/51/31af5137-9526-4386-0383-c85887692fd5/Placeholder.mill/64x64bb-75.webp', name: 'Train Fitness Workout Tracker', subtitle: 'Auto-tracking for Apple Watch', link: '#', bgColor: 'rgb(42,42,42)' },
+                { id: 'hf-ess-5', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/96/e9/c6/96e9c627-6634-3ba0-abc9-4adb38803159/AppIcon-0-0-1x_U007epad-0-1-85-220.png/64x64ia-75.webp', name: 'Open: Breathwork + Meditation', subtitle: 'A Mindfulness Studio', link: '#', bgColor: 'rgb(238,236,231)' },
+                { id: 'hf-ess-6', iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d3/1c/bd/d31cbd6f-9b05-4441-75bf-63a170a4d3c7/AppIcon-Launch-0-0-1x_U007ephone-0-1-85-220.png/64x64ia-75.webp', name: 'Peloton Strength+', subtitle: 'Health & Fitness', link: '#', bgColor: 'rgb(255,66,48)' }
+            ]
+        },
+        {
+            id: 'top-free-hf',
+            type: 'ordinal-lockup-row',
+            title: 'Top Free',
+            seeAllLink: '#',
+            items: [
+                 { id: 'tf-hf-1', ordinal: 1, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/10/bd/8c/10bd8c4e-0d1f-b8b7-b7f6-0b1120fe5e6a/appicon-1x_U007emarketing-0-8-0-85-220-0.png/100x100ia-75.webp', name: 'Planet Fitness', subtitle: 'Workouts for everyone', link: '#', bgColor: 'rgb(92,46,132)' },
+                { id: 'tf-hf-2', ordinal: 2, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/58/19/fe/5819fe65-08ed-9251-4605-1493fc0257fb/AppIcon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/100x100ia-75.webp', name: 'Flo Cycle & Period Tracker', subtitle: 'Ovulation & Pregnancy Calendar', link: '#', bgColor: 'rgb(238,103,133)' },
+                { id: 'tf-hf-3', ordinal: 3, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e2/ed/68/e2ed6843-061c-e4b4-5108-187caa4a17fc/Placeholder.mill/100x100bb-75.webp', name: 'Cal AI - Calorie Tracker', subtitle: 'Food & Macro Counter', link: '#', bgColor: 'rgb(27,25,34)' },
+                { id: 'tf-hf-4', ordinal: 4, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a9/02/5b/a9025be7-97ad-d902-d1eb-a4fef0652a43/Placeholder.mill/100x100bb-75.webp', name: 'Yuka - Food & Cosmetic Scanner', subtitle: "Check What's in Your Products", link: '#', bgColor: 'rgb(253,253,253)' },
+                { id: 'tf-hf-5', ordinal: 5, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ba/aa/bf/baaabfcb-b3d0-9885-7066-50c5fa17efd9/AppIcon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/100x100ia-75.webp', name: 'Strava: Run, Bike, Walk', subtitle: 'Track & share with friends', link: '#', bgColor: 'rgb(255,128,0)' },
+                { id: 'tf-hf-6', ordinal: 6, iconUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c8/d3/36/c8d336bd-2e40-fa8a-2189-33984bb6e478/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100ia-75.webp', name: 'MyFitnessPal: Calorie Counter', subtitle: 'Track Food, Macros & Nutrition', link: '#', bgColor: 'rgb(0,81,190)' },
+            ]
+        },
+    ]
+};
+
 // --- AGGREGATE ALL APP DATA FOR SEARCH ---
 
 const allDataSources = [
-    shelfData,
-    gamesShelfData,
+    { items: shelfData.flatMap(shelf => shelf.cards) },
+    { items: gamesShelfData.flatMap(shelf => shelf.cards) },
     ...puzzlePageData.shelves.map(s => ({ items: s.items })),
     ...actionPageData.shelves.map(s => ({ items: s.items })),
     ...adventurePageData.shelves.map(s => ({ items: s.items })),
     ...entertainmentPageData.shelves.map(s => ({ items: s.items })),
     ...productivityPageData.shelves.map(s => ({ items: s.items })),
     ...arcadePageData.shelves.map(s => ({items: s.items})),
+    ...healthFitnessPageData.shelves.map(s => ({items: s.items})),
 ];
 
 const appMap = new Map<string, AppInfo>();
@@ -578,7 +623,7 @@ allDataSources.forEach(source => {
          source.items.forEach((item: any) => {
             if (item.appInfo) addAppToMap(item.appInfo);
             // Handle small lockup data which is also app info
-            if (item.iconUrl) addAppToMap(item);
+            if (item.iconUrl && item.subtitle) addAppToMap(item);
         });
     }
 });

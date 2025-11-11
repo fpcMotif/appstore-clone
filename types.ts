@@ -59,6 +59,7 @@ export interface SpotlightCardData {
   theme: 'light' | 'dark';
   appInfo: AppInfo;
   link: string;
+  layout?: 'west';
 }
 
 export interface SmallLockupData extends AppInfo {

@@ -8,6 +8,8 @@ import Action from './pages/Action';
 import Adventure from './pages/Adventure';
 import Entertainment from './pages/Entertainment';
 import Productivity from './pages/Productivity';
+import HealthFitness from './pages/HealthFitness';
+import PhotoVideo from './pages/PhotoVideo';
 import SearchResults from './pages/SearchResults';
 import { allApps } from './constants';
 import type { AppInfo } from './types';
@@ -94,6 +96,10 @@ const App: React.FC = () => {
         return <Entertainment />;
       case '#/category/productivity':
         return <Productivity />;
+      case '#/category/health-fitness':
+        return <HealthFitness />;
+      case '#/category/photo-video':
+        return <PhotoVideo />;
       case '#/':
         return <Today />;
       default:
