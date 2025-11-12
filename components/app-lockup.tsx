@@ -12,62 +12,29 @@ const AppLockup: React.FC<AppLockupProps> = ({
   theme,
   bgColor,
 }) => {
-  const buttonStyle =
+  const buttonClasses =
     theme === "dark"
-      ? {
-          backgroundColor: "var(--color-text-light)",
-          color: "var(--color-text-primary)",
-          opacity: 0.2,
-        }
-      : {
-          backgroundColor: "var(--color-background-disabled)",
-          color: "var(--color-link)",
-        };
+      ? "bg-text-light/20 text-text-primary rounded-full px-5 py-2 text-sm font-semibold transition-fast"
+      : "bg-background-disabled text-link rounded-full px-5 py-2 text-sm font-semibold transition-fast";
 
   return (
-    <div className="flex items-center" style={{ gap: "var(--spacing-md)" }}>
+    <div className="flex items-center gap-4">
       <div className="flex-shrink-0">
         <img
           alt={`${name} icon`}
+          className="size-app-icon rounded-xl"
           height="48"
           src={iconUrl}
-          style={{
-            height: "var(--size-app-icon)",
-            width: "var(--size-app-icon)",
-            borderRadius: "var(--radius-xl)",
-            backgroundColor: bgColor,
-          }}
+          style={{ backgroundColor: bgColor }}
           width="48"
         />
       </div>
       <div className="min-w-0 flex-1">
-        <p
-          className="truncate font-semibold"
-          style={{ fontSize: "var(--size-3)" }}
-        >
-          {name}
-        </p>
-        <p
-          className="truncate"
-          style={{ fontSize: "var(--size-2)", opacity: 0.8 }}
-        >
-          {subtitle}
-        </p>
+        <p className="truncate font-semibold text-lockup-title">{name}</p>
+        <p className="truncate text-lockup-subtitle opacity-80">{subtitle}</p>
       </div>
       <div className="flex-shrink-0">
-        <button
-          className="font-semibold transition-fast"
-          style={{
-            borderRadius: "9999px",
-            paddingLeft: "var(--spacing-button-padding)",
-            paddingRight: "var(--spacing-button-padding)",
-            paddingTop: "var(--spacing-sm)",
-            paddingBottom: "var(--spacing-sm)",
-            fontSize: "var(--size-3)",
-            ...buttonStyle,
-          }}
-          type="button"
-        >
+        <button className={buttonClasses} type="button">
           View
         </button>
       </div>

@@ -1,8 +1,7 @@
 ---
-trigger: glob
-globs: *.css,*.tsx
----
-
+description: Guide for using Tailwind CSS v4 instead of v3.x
+globs: *.tsx,*.jsx,*.css,*.mdx
+alwaysApply: false
 ---
 
 # Tailwind CSS v4
@@ -160,17 +159,17 @@ globs: *.css,*.tsx
 
 - **Removed deprecated utilities**:
 
-  - `bg-opacity-*` �?Use `bg-black/50` instead
-  - `text-opacity-*` �?Use `text-black/50` instead
+  - `bg-opacity-*` → Use `bg-black/50` instead
+  - `text-opacity-*` → Use `text-black/50` instead
   - And others: `border-opacity-*`, `divide-opacity-*`, etc.
 
 - **Renamed utilities**:
 
-  - `shadow-sm` �?`shadow-xs` (and `shadow` �?`shadow-sm`)
-  - `drop-shadow-sm` �?`drop-shadow-xs` (and `drop-shadow` �?`drop-shadow-sm`)
-  - `blur-sm` �?`blur-xs` (and `blur` �?`blur-sm`)
-  - `rounded-sm` �?`rounded-xs` (and `rounded` �?`rounded-sm`)
-  - `outline-none` �?`outline-hidden` (for the old behavior)
+  - `shadow-sm` → `shadow-xs` (and `shadow` → `shadow-sm`)
+  - `drop-shadow-sm` → `drop-shadow-xs` (and `drop-shadow` → `drop-shadow-sm`)
+  - `blur-sm` → `blur-xs` (and `blur` → `blur-sm`)
+  - `rounded-sm` → `rounded-xs` (and `rounded` → `rounded-sm`)
+  - `outline-none` → `outline-hidden` (for the old behavior)
 
 - **Default style changes**:
 

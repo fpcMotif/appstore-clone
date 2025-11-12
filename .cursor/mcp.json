@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "bunx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "type": "stdio"
+    },
+    "convex": {
+      "command": "bunx",
+      "args": ["-y", "convex@latest", "mcp", "start"],
+      "type": "stdio"
+    },
+    "shadcn": {
+      "command": "bunx",
+      "args": ["shadcn@latest", "mcp"],
+      "type": "stdio"
+    }
+  }
+}

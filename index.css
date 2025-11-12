@@ -174,6 +174,9 @@
   --opacity-backdrop: 0.2;
   --opacity-hover: 0.3;
   --opacity-active: 0.8;
+
+  /* Tailwind color mappings for semantic colors */
+  --color-outline: var(--color-border);
 }
 
 /* Dark theme overrides */
@@ -266,6 +269,99 @@
 
 @utility gradient-overlay {
   background: var(--gradient-overlay);
+}
+
+/* Spacing utilities */
+@utility mb-header {
+  margin-bottom: var(--spacing-header-margin);
+}
+
+@utility gap-section {
+  gap: var(--spacing-section-gap);
+}
+
+@utility gap-card {
+  gap: var(--spacing-card-gap);
+}
+
+@utility gap-list {
+  gap: var(--spacing-list-gap);
+}
+
+@utility p-card {
+  padding: var(--spacing-card-padding);
+}
+
+@utility px-container {
+  padding-left: var(--spacing-container-padding);
+  padding-right: var(--spacing-container-padding);
+}
+
+@utility mt-content {
+  margin-top: var(--spacing-content-margin);
+}
+
+/* Aspect ratio utilities */
+@utility aspect-card {
+  aspect-ratio: var(--aspect-card);
+}
+
+@utility aspect-spotlight {
+  aspect-ratio: var(--aspect-spotlight);
+}
+
+@utility aspect-spotlight-md {
+  aspect-ratio: var(--aspect-spotlight-md);
+}
+
+@utility aspect-spotlight-lg {
+  aspect-ratio: var(--aspect-spotlight-lg);
+}
+
+/* Transform utilities */
+@utility hover-lift {
+  &:hover {
+    transform: translateY(var(--transform-hover-lift));
+  }
+}
+
+@utility hover-scale {
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Text size utilities */
+@utility text-badge {
+  font-size: var(--size-2);
+}
+
+@utility text-lockup-title {
+  font-size: var(--size-3);
+}
+
+@utility text-lockup-subtitle {
+  font-size: var(--size-2);
+}
+
+/* Icon size utilities */
+@utility size-app-icon {
+  width: var(--size-app-icon);
+  height: var(--size-app-icon);
+}
+
+/* Z-index utilities */
+@utility z-overlay {
+  z-index: 10;
+}
+
+/* Opacity utilities */
+@utility opacity-text {
+  opacity: 0.8;
+}
+
+@utility opacity-text-secondary {
+  opacity: 0.8;
 }
 
 /* Keyframe animations */
@@ -600,6 +696,69 @@
   .scroll-container::-webkit-scrollbar-thumb {
     background-color: var(--color-border);
     border-radius: var(--radius-md);
+  }
+
+  /* Apple-style scrollbar: completely hidden (no scrollbar visible) */
+  .scrollbar-hide {
+    /* Firefox: hide scrollbar */
+    scrollbar-width: none;
+    /* IE and Edge: hide scrollbar */
+    -ms-overflow-style: none;
+  }
+
+  /* Webkit browsers (Chrome, Safari, Edge): hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar-track {
+    display: none;
+    background: transparent;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar-thumb {
+    display: none;
+    background: transparent;
+  }
+
+  /* Apple-style auto-hiding scrollbar (optional: shows on hover/scroll) */
+  .scrollbar-apple {
+    /* Firefox: thin scrollbar that auto-hides */
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.3s ease;
+  }
+
+  .scrollbar-apple:hover,
+  .scrollbar-apple:active {
+    scrollbar-color: oklch(0.5 0 0 / 0.3) transparent;
+  }
+
+  .scrollbar-apple::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  .scrollbar-apple::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-apple::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+
+  .scrollbar-apple:hover::-webkit-scrollbar-thumb,
+  .scrollbar-apple:active::-webkit-scrollbar-thumb {
+    background-color: oklch(0.5 0 0 / 0.3);
+  }
+
+  .scrollbar-apple::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(0.4 0 0 / 0.5);
   }
 
   .backdrop-blur {

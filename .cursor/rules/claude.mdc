@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+Description of the change with examples
+```
+
+"${patchType}" should be replaced by "patch" if the PR contains only bugfixes or small changes; or "minor" if new diagnostics, refactors or features are added.
+
+### 4. Pushing the PR to GitHub
+If all the preliminary checks pass, ask the user if some specific issue should be referenced, gather info on the issue and then create a new github PR for the changes that:
+- Provide a description of what changed, ensure to read examples and test/__snapshots__ related to the change to ensure full understanding of whats changed
+- If the change involve refactors or diagnostic, provide an example of the feature added/changed

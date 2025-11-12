@@ -4,7 +4,7 @@ import type { CategoryItem, NavItem } from "../types";
 
 const AppStoreIcon: React.FC = () => (
   <svg
-    className="text-[var(--color-text-secondary)]/90"
+    className="text-text-secondary/90"
     height="21"
     viewBox="0 0 121 21"
     width="121"
@@ -25,29 +25,26 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ activeRoute }) => (
-  <aside className="sticky top-0 hidden h-screen w-[var(--size-sidebar-width)] border-[var(--color-outline)]/80 border-r bg-[var(--color-background)] px-[var(--spacing-4)] py-[var(--spacing-8)] md:block">
-    <div className="mb-[var(--spacing-lg)] flex items-center gap-[var(--spacing-sm)]">
+  <aside className="sticky top-0 hidden h-screen w-[240px] border-outline/80 border-r bg-background px-4 py-8 md:block">
+    <div className="mb-6 flex items-center gap-2">
       <AppStoreIcon />
     </div>
-    <nav
-      className="space-y-[var(--spacing-xl)]"
-      style={{ gap: "var(--spacing-xl)" }}
-    >
+    <nav className="gap-xl space-y-8">
       <div>
-        <ul className="space-y-1" style={{ gap: "var(--spacing-md)" }}>
+        <ul className="gap-md space-y-1">
           {navItems.map((item: NavItem) => {
             const isActive = item.link === activeRoute;
             return (
               <li key={item.name}>
                 <a
-                  className={`flex items-center rounded-[var(--radius-md)] px-[var(--spacing-3)] py-[var(--spacing-2)] font-[var(--font-weight-medium)] text-[var(--font-size-sm)] transition-colors ${
+                  className={`flex items-center rounded-md px-3 py-2 font-medium text-sm transition-colors ${
                     isActive
-                      ? "bg-[var(--color-background-disabled)]/80 text-[var(--color-text-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-background-disabled)]/50"
+                      ? "bg-background-disabled/80 text-text-primary"
+                      : "text-text-secondary hover:bg-background-disabled/50"
                   }`}
                   href={item.link}
                 >
-                  <span className="mr-[var(--spacing-md)] h-[var(--spacing-6)] w-[var(--spacing-6)] text-[var(--color-text-secondary)]">
+                  <span className="mr-4 h-6 w-6 text-text-secondary">
                     {item.icon}
                   </span>
                   <span>{item.name}</span>
@@ -58,26 +55,26 @@ const Sidebar: React.FC<SidebarProps> = ({ activeRoute }) => (
         </ul>
       </div>
 
-      <div className="border-[var(--color-outline)]/80 border-t pt-[var(--spacing-lg)]">
-        <h3 className="mb-[var(--spacing-sm)] px-[var(--spacing-3)] font-[var(--font-weight-semibold)] text-[var(--color-text-secondary)] text-[var(--font-size-xs)] uppercase tracking-[var(--letter-spacing-wide)]">
+      <div className="border-outline/80 border-t pt-6">
+        <h3 className="mb-2 px-3 font-semibold text-text-secondary text-xs uppercase tracking-wide">
           Categories
         </h3>
-        <ul className="space-y-1" style={{ gap: "var(--spacing-md)" }}>
+        <ul className="gap-md space-y-1">
           {categories.map((category: CategoryItem) => {
             const isActive = activeRoute === category.link;
             return (
               <li key={category.name}>
                 <a
-                  className={`flex items-center rounded-[var(--radius-md)] px-[var(--spacing-3)] py-[var(--spacing-2)] font-[var(--font-weight-medium)] text-[var(--font-size-sm)] transition-colors ${
+                  className={`flex items-center rounded-md px-3 py-2 font-medium text-sm transition-colors ${
                     isActive
-                      ? "bg-[var(--color-background-disabled)]/80 text-[var(--color-text-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-background-disabled)]/50"
+                      ? "bg-background-disabled/80 text-text-primary"
+                      : "text-text-secondary hover:bg-background-disabled/50"
                   }`}
                   href={category.link}
                 >
                   <img
                     alt=""
-                    className="mr-[var(--spacing-md)] h-[var(--spacing-6)] w-[var(--spacing-6)] rounded-[var(--radius-md)]"
+                    className="mr-4 h-6 w-6 rounded-md"
                     height={24}
                     src={category.iconUrl}
                     width={24}

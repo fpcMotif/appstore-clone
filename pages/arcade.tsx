@@ -33,10 +33,10 @@ const Arcade: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 bg-white md:bg-[#f5f5f7]">
+    <main className="flex-1 bg-surface md:bg-background">
       <div className="space-y-12 py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <h1 className="mb-2 font-bold text-4xl text-black">{title}</h1>
+          <h1 className="mb-2 font-bold text-4xl text-text-primary">{title}</h1>
         </div>
 
         {shelves.map((shelf) => {

@@ -7,13 +7,14 @@ type SpotlightCardProps = {
 };
 
 const SpotlightCard: React.FC<SpotlightCardProps> = ({ data }) => {
-  const cardThemeClass = data.theme === "light" ? "text-black" : "text-white";
+  const cardThemeClass =
+    data.theme === "light" ? "text-text-primary" : "text-text-light";
 
   if (data.layout === "west") {
     return (
       <li className="w-full flex-shrink-0 snap-start">
         <a
-          className="hover:-translate-y-[var(--transform-hover-lift)] relative block aspect-spotlight transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-[var(--transition-ease-in-out)] hover:shadow-[var(--shadow-card-hover)] md:aspect-spotlight-md lg:aspect-spotlight-lg"
+          className="hover:-translate-y-1 relative block aspect-spotlight transform overflow-hidden rounded-xl shadow-card transition-all duration-300 ease-in-out hover:shadow-card-hover md:aspect-spotlight-md lg:aspect-spotlight-lg"
           href={data.link}
           style={{ backgroundColor: data.accentColor }}
         >
@@ -57,7 +58,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({ data }) => {
   return (
     <li className="w-full flex-shrink-0 snap-start">
       <a
-        className="hover:-translate-y-[var(--transform-hover-lift)] relative block aspect-spotlight transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-[var(--transition-ease-in-out)] hover:shadow-[var(--shadow-card-hover)] md:aspect-spotlight-md lg:aspect-spotlight-lg"
+        className="hover:-translate-y-1 relative block aspect-spotlight transform overflow-hidden rounded-xl shadow-card transition-all duration-300 ease-in-out hover:shadow-card-hover md:aspect-spotlight-md lg:aspect-spotlight-lg"
         href={data.link}
         style={{ backgroundColor: data.accentColor }}
       >
@@ -70,7 +71,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({ data }) => {
             width={800}
           />
           <div
-            className="absolute inset-0"
+            className="gradient-overlay absolute inset-0"
             style={{
               background: `linear-gradient(90deg, ${data.accentColor} 35%, transparent 70%)`,
             }}

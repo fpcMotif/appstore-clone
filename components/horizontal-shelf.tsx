@@ -16,30 +16,15 @@ const Arrow: React.FC<{
 }> = ({ direction, onClick, disabled }) => (
   <button
     aria-label={direction === "left" ? "Scroll left" : "Scroll right"}
-    className="absolute z-10 flex items-center justify-center backdrop-blur transition-fast"
+    className={`-translate-y-1/2 absolute top-1/2 z-10 flex h-8 w-6 items-center justify-center rounded-xl bg-background-disabled shadow-xl backdrop-blur transition-fast ${
+      direction === "left" ? "-left-4" : "-right-4"
+    } ${disabled ? "opacity-0" : "opacity-100"}`}
     disabled={disabled}
     onClick={onClick}
-    style={{
-      top: "50%",
-      transform: "translateY(var(--transform-arrow-center))",
-      height: "var(--size-medium-icon)",
-      width: "var(--size-small-icon)",
-      borderRadius: "var(--radius-card)",
-      left: direction === "left" ? "var(--transform-arrow-left)" : "auto",
-      right: direction === "right" ? "var(--transform-arrow-right)" : "auto",
-      opacity: disabled ? 0 : 1,
-      boxShadow: "var(--shadow-xl)",
-      backgroundColor: "var(--color-background-disabled)",
-    }}
     type="button"
   >
     <svg
-      className={`mx-auto ${direction === "right" ? "rotate-180 transform" : ""}`}
-      style={{
-        height: "var(--size-4)",
-        width: "var(--size-2)",
-        color: "var(--color-text-secondary)",
-      }}
+      className={`mx-auto h-4 w-2 text-text-secondary ${direction === "right" ? "rotate-180 transform" : ""}`}
       viewBox="0 0 9 31"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -98,32 +83,15 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
   return (
     <section>
       {(title || subtitle) && (
-        <div
-          className="flex items-end justify-between"
-          style={{ marginBottom: "var(--spacing-md)" }}
-        >
+        <div className="mb-4 flex items-end justify-between">
           <div>
             {title && (
-              <h2
-                className="font-bold"
-                style={{
-                  fontSize: "var(--size-6)",
-                  color: "var(--color-text-primary)",
-                }}
-              >
-                {title}
-              </h2>
+              <h2 className="font-bold text-2xl text-text-primary">{title}</h2>
             )}
-            {subtitle && (
-              <p style={{ color: "var(--color-text-secondary)" }}>{subtitle}</p>
-            )}
+            {subtitle && <p className="text-text-secondary">{subtitle}</p>}
           </div>
           {seeAllLink && (
-            <a
-              className="link font-semibold"
-              href={seeAllLink}
-              style={{ fontSize: "var(--size-3)" }}
-            >
+            <a className="link font-semibold text-sm" href={seeAllLink}>
               See All
             </a>
           )}
@@ -131,12 +99,8 @@ const HorizontalShelf: React.FC<HorizontalShelfProps> = ({
       )}
       <div className="group relative">
         <div
-          className={`scrollbar-hide snap-x snap-mandatory overflow-x-auto scroll-smooth ${contentClassName}`}
+          className={`scrollbar-hide -mb-2 snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2 ${contentClassName}`}
           ref={scrollRef}
-          style={{
-            marginBottom: "calc(var(--spacing-sm) * -1)",
-            paddingBottom: "var(--spacing-sm)",
-          }}
         >
           {children}
         </div>

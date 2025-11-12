@@ -145,23 +145,21 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ items }) => {
         <div className="relative h-full w-full">
           {items.map((item, index) => (
             <div
-              className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                index === activeIndex ? "opacity-100" : "opacity-0"
+              }`}
               key={item.id}
-              style={{
-                opacity: index === activeIndex ? 1 : 0,
-                backgroundColor: item.accentColor,
-              }}
+              style={{ backgroundColor: item.accentColor }}
             >
               <img
                 alt=""
                 aria-hidden="true"
-                className="h-full w-full scale-125 object-cover opacity-30"
+                className="h-full w-full scale-125 object-cover opacity-30 blur-[40px]"
                 height={800}
                 src={item.videoPosterUrl || item.imageUrl}
-                style={{ filter: "blur(40px)" }}
                 width={1200}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f5f5f7]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
             </div>
           ))}
         </div>

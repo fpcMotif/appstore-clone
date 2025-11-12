@@ -8,32 +8,31 @@ type EditorialCardProps = {
 const EditorialCard: React.FC<EditorialCardProps> = ({ data }) => (
   <section>
     <a
-      className="hover:-translate-y-[var(--transform-hover-lift)] block transform overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)] transition-all duration-[var(--transition-normal)] ease-in-out hover:shadow-[var(--shadow-card-hover)]"
+      className="card-interactive hover:-translate-y-[var(--transform-hover-lift)] block overflow-hidden transition-transform duration-[var(--transition-normal)] ease-[var(--transition-ease-in-out)]"
       href={data.link}
+      style={{ backgroundColor: data.accentColor }}
     >
-      <div
-        className="flex items-center p-6"
-        style={{ backgroundColor: data.accentColor }}
-      >
-        <div className="mr-6 flex-shrink-0">
+      <div className="flex flex-col gap-6 p-card text-text-light sm:flex-row sm:items-center">
+        <div className="flex-shrink-0">
           <img
             alt={data.appInfo.name}
-            className="h-[var(--size-large-icon)] w-[var(--size-large-icon)] rounded-3xl"
+            className="size-app-icon rounded-3xl"
             height={128}
             src={data.appInfo.iconUrl}
             width={128}
           />
         </div>
-        <div className="text-black">
-          <p className="font-bold text-xs uppercase tracking-wider">
+        <div className="space-y-2">
+          <p className="font-semibold text-badge uppercase tracking-wider opacity-80">
             {data.badge}
           </p>
-          <h3 className="mt-1 font-bold text-3xl">{data.title}</h3>
-          <p className="mt-1 text-lg">{data.description}</p>
-          <div className="mt-4 flex items-center font-semibold text-blue-600">
-            View Game
+          <h3 className="font-bold text-3xl leading-tight">{data.title}</h3>
+          <p className="text-lg opacity-90">{data.description}</p>
+          <div className="mt-4 inline-flex items-center gap-2 font-semibold text-sm text-text-light/80">
+            <span>View Game</span>
             <svg
-              className="ml-2 h-3.5 w-2 fill-current"
+              className="h-3.5 w-2"
+              fill="currentColor"
               viewBox="0 0 51.108 87.687"
             >
               <title>Right arrow icon</title>
