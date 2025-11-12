@@ -44,10 +44,12 @@ const Entertainment: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 bg-white md:pr-4 md:pl-8 lg:px-8 xl:px-12">
+    <main className="flex-1 bg-surface md:pr-4 md:pl-8 lg:px-8 xl:px-12">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:px-0">
-        <h1 className="mb-8 font-bold text-4xl text-black">{title}</h1>
-        <div className="space-y-12">
+        <h1 className="mb-header font-bold text-4xl text-text-primary">
+          {title}
+        </h1>
+        <div className="gap-section space-y-12">
           {shelves.map((shelf) => {
             if (shelf.type === "editorial") {
               return <EditorialCard data={shelf.items[0]} key={shelf.id} />;
