@@ -1,0 +1,939 @@
+---
+globs: *.svelte
+alwaysApply: false
+---
+
+### 规则 2: 转换响应式变量 (let → $state)
+
+**模式匹配**:
+
+```svelte
+let variableName = initialValue;
+```
+
+**转换为**:
+
+```svelte
+let variableName = $state(initialValue);
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+let count = 0;
+let name = "John";
+let items = [];
+</script>
+
+// ✅ Runes 模式
+<script>
+let count = $state(0);
+let name = $state("John");
+let items = $state([]);
+</script>
+```
+
+**重要**:
+
+- 如果变量在模板中使用，必须转换为 `$state`
+- 如果只是计算值，应该使用 `$derived`
+- 对象和数组自动深度响应式
+
+---
+
+### 规则 3: 转换 Props (export let → $props)
+
+**模式匹配**:
+
+```svelte
+export let propName;
+export let propWithDefault = defaultValue;
+```
+
+**转换为**:
+
+```svelte
+let { propName, propWithDefault = defaultValue } = $props();
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+export let title;
+export let count = 0;
+export let optional = "default";
+</script>
+
+// ✅ Runes 模式
+<script>
+let { title, count = 0, optional = "default" } = $props();
+</script>
+```
+
+**TypeScript 版本**:
+
+```svelte
+<script lang="ts">
+let {
+  title,
+  count = 0,
+  optional = "default"
+} = $props<{
+  title: string;
+  count?: number;
+  optional?: string;
+}>();
+</script>
+```
+
+**特殊情况**:
+
+1. **Props 重命名** (如保留关键字):
+
+```svelte
+// ❌ 遗留
+export { klass as class };
+
+// ✅ Runes
+let { class: klass } = $props();
+```
+
+2. **剩余 Props**:
+
+```svelte
+// ❌ 遗留
+$$restProps
+
+// ✅ Runes
+let { foo, bar, ...rest } = $props();
+```
+
+3. **所有 Props**:
+
+```svelte
+// ❌ 遗留
+$$props
+
+// ✅ Runes
+let props = $props();
+```
+
+---
+
+### 规则 4: 转换响应式声明 ($: → $derived)
+
+**模式匹配**:
+
+```svelte
+$: derivedValue = expression;
+$: derivedValue = computeFromOtherValues(a, b);
+```
+
+**转换为**:
+
+```svelte
+const derivedValue = $derived(expression);
+const derivedValue = $derived(computeFromOtherValues(a, b));
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+let count = 0;
+$: doubled = count * 2;
+$: tripled = doubled + count;
+$: message = `Count is ${count}`;
+</script>
+
+// ✅ Runes 模式
+<script>
+let count = $state(0);
+const doubled = $derived(count * 2);
+const tripled = $derived(doubled + count);
+const message = $derived(`Count is ${count}`);
+</script>
+```
+
+**复杂计算**:
+
+```svelte
+// ❌ 遗留
+$: result = (() => {
+  if (count > 10) return "high";
+  if (count > 5) return "medium";
+  return "low";
+})();
+
+// ✅ Runes
+const result = $derived(() => {
+  if (count > 10) return "high";
+  if (count > 5) return "medium";
+  return "low";
+}());
+```
+
+---
+
+### 规则 5: 转换副作用 ($: {} → $effect)
+
+**模式匹配**:
+
+```svelte
+$: {
+  // 副作用代码
+}
+$: console.log(value);
+```
+
+**转换为**:
+
+```svelte
+$effect(() => {
+  // 副作用代码
+});
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+let count = 0;
+$: {
+  console.log('count changed:', count);
+  if (count > 5) {
+    alert('Count is too high!');
+  }
+}
+$: document.title = `Count: ${count}`;
+</script>
+
+// ✅ Runes 模式
+<script>
+let count = $state(0);
+
+$effect(() => {
+  console.log('count changed:', count);
+  if (count > 5) {
+    alert('Count is too high!');
+  }
+});
+
+$effect(() => {
+  document.title = `Count: ${count}`;
+});
+</script>
+```
+
+**重要区别**:
+
+- `$effect.pre()`: 在 DOM 更新前运行 (类似 `beforeUpdate`)
+- `$effect()`: 在 DOM 更新后运行 (类似 `afterUpdate`)
+
+---
+
+### 规则 6: 修复 bind:this (const → let)
+
+**模式匹配**:
+
+```svelte
+const ref = $state();
+<div bind:this={ref}>
+```
+
+**转换为**:
+
+```svelte
+let ref = $state();
+<div bind:this={ref}>
+```
+
+**示例**:
+
+```svelte
+// ❌ 错误 - 会导致编译失败
+<script>
+const scrollRef = $state();
+const inputRef = $state();
+</script>
+<div bind:this={scrollRef}>...</div>
+<input bind:this={inputRef} />
+
+// ✅ 正确
+<script>
+let scrollRef = $state();
+let inputRef = $state();
+</script>
+<div bind:this={scrollRef}>...</div>
+<input bind:this={inputRef} />
+```
+
+---
+
+### 规则 7: 转换事件处理器 (on: → onevent)
+
+**模式匹配**:
+
+```svelte
+<element on:eventname={handler}>
+<element on:eventname={() => code}>
+```
+
+**转换为**:
+
+```svelte
+<element oneventname={handler}>
+<element oneventname={() => code}>
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留模式
+<button on:click={handleClick}>Click</button>
+<input on:input={handleInput} on:focus={handleFocus} />
+<div on:mouseenter={enter} on:mouseleave={leave}>Hover</div>
+
+// ✅ Runes 模式
+<button onclick={handleClick}>Click</button>
+<input oninput={handleInput} onfocus={handleFocus} />
+<div onmouseenter={enter} onmouseleave={leave}>Hover</div>
+```
+
+**简写语法**:
+
+```svelte
+<script>
+function onclick() {
+  count++;
+}
+</script>
+<button {onclick}>Click</button>
+```
+
+**事件修饰符迁移**:
+
+```svelte
+// ❌ 遗留 - 事件修饰符
+<button on:click|preventDefault|stopPropagation={handler}>
+
+// ✅ Runes - 在处理器中手动调用
+<button onclick={(e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  handler(e);
+}}>
+```
+
+**特殊修饰符**:
+
+- `capture`: 添加到事件名 → `onclickcapture={handler}`
+- `once`: 创建包装函数
+- `passive`: 使用 action
+
+---
+
+### 规则 8: 转换组件事件 (createEventDispatcher → 回调 props)
+
+**模式匹配**:
+
+```svelte
+import { createEventDispatcher } from 'svelte';
+const dispatch = createEventDispatcher();
+dispatch('eventname', data);
+```
+
+**转换为**:
+
+```svelte
+let { oneventname } = $props();
+oneventname(data);
+```
+
+**示例 - 子组件**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+import { createEventDispatcher } from 'svelte';
+const dispatch = createEventDispatcher();
+
+function handleClick() {
+  dispatch('message', { text: 'Hello' });
+}
+</script>
+<button on:click={handleClick}>Send</button>
+
+// ✅ Runes 模式
+<script>
+let { onmessage } = $props();
+
+function handleClick() {
+  onmessage({ text: 'Hello' });
+}
+</script>
+<button onclick={handleClick}>Send</button>
+```
+
+**示例 - 父组件**:
+
+```svelte
+// ❌ 遗留模式
+<Child on:message={(e) => console.log(e.detail)} />
+
+// ✅ Runes 模式
+<Child onmessage={(data) => console.log(data)} />
+```
+
+---
+
+### 规则 9: 转换 Slots 到 Snippets
+
+#### 9.1 默认内容 (slot → children)
+
+**子组件**:
+
+```svelte
+// ❌ 遗留模式
+<div class="container">
+  <slot />
+</div>
+
+// ✅ Runes 模式
+<script>
+let { children } = $props();
+</script>
+<div class="container">
+  {@render children?.()}
+</div>
+```
+
+**父组件** (无变化):
+
+```svelte
+<Container>
+  <p>This is the content</p>
+</Container>
+```
+
+#### 9.2 命名 Slots
+
+**子组件**:
+
+```svelte
+// ❌ 遗留模式
+<header>
+  <slot name="header" />
+</header>
+<main>
+  <slot name="main" />
+</main>
+<footer>
+  <slot name="footer" />
+</footer>
+
+// ✅ Runes 模式
+<script>
+let { header, main, footer } = $props();
+</script>
+<header>
+  {@render header()}
+</header>
+<main>
+  {@render main()}
+</main>
+<footer>
+  {@render footer()}
+</footer>
+```
+
+**父组件**:
+
+```svelte
+// ❌ 遗留模式
+<Layout>
+  <div slot="header">Header Content</div>
+  <div slot="main">Main Content</div>
+  <div slot="footer">Footer Content</div>
+</Layout>
+
+// ✅ Runes 模式
+<Layout>
+  {#snippet header()}
+    <div>Header Content</div>
+  {/snippet}
+
+  {#snippet main()}
+    <div>Main Content</div>
+  {/snippet}
+
+  {#snippet footer()}
+    <div>Footer Content</div>
+  {/snippet}
+</Layout>
+```
+
+#### 9.3 带数据的 Slots (let: → snippet 参数)
+
+**子组件**:
+
+```svelte
+// ❌ 遗留模式
+<script>
+let items = ['one', 'two', 'three'];
+</script>
+{#each items as item}
+  <slot name="item" {item} />
+{/each}
+
+// ✅ Runes 模式
+<script>
+let { item } = $props();
+let items = $state(['one', 'two', 'three']);
+</script>
+{#each items as entry}
+  {@render item(entry)}
+{/each}
+```
+
+**父组件**:
+
+```svelte
+// ❌ 遗留模式
+<List let:item>
+  <span>{item}</span>
+</List>
+
+// ✅ Runes 模式
+<List>
+  {#snippet item(text)}
+    <span>{text}</span>
+  {/snippet}
+</List>
+```
+
+---
+
+### 规则 10: 转换生命周期函数
+
+**onMount** - 保持不变，但可以使用 $effect:
+
+```svelte
+// ✅ 两种方式都可以
+import { onMount } from 'svelte';
+onMount(() => {
+  // 初始化代码
+});
+
+// 或者
+$effect(() => {
+  // 初始化代码
+  return () => {
+    // 清理代码
+  };
+});
+```
+
+**beforeUpdate → $effect.pre**:
+
+```svelte
+// ❌ 遗留
+import { beforeUpdate } from 'svelte';
+beforeUpdate(() => {
+  // 在 DOM 更新前运行
+});
+
+// ✅ Runes
+$effect.pre(() => {
+  // 在 DOM 更新前运行
+});
+```
+
+**afterUpdate → $effect**:
+
+```svelte
+// ❌ 遗留
+import { afterUpdate } from 'svelte';
+afterUpdate(() => {
+  // 在 DOM 更新后运行
+});
+
+// ✅ Runes
+$effect(() => {
+  // 在 DOM 更新后运行
+});
+```
+
+**onDestroy → $effect 返回清理函数**:
+
+```svelte
+// ❌ 遗留
+import { onDestroy } from 'svelte';
+const interval = setInterval(() => {}, 1000);
+onDestroy(() => {
+  clearInterval(interval);
+});
+
+// ✅ Runes
+$effect(() => {
+  const interval = setInterval(() => {}, 1000);
+  return () => {
+    clearInterval(interval);
+  };
+});
+```
+
+---
+
+### 规则 11: 转换存储订阅 ($store)
+
+**模式匹配**:
+
+```svelte
+import { myStore } from './stores';
+$: value = $myStore;
+```
+
+**转换为**:
+
+```svelte
+import { myStore } from './stores';
+const value = $derived($myStore);
+```
+
+**或者直接在模板中使用**:
+
+```svelte
+<script>
+import { myStore } from './stores';
+</script>
+<p>{$myStore}</p>
+```
+
+---
+
+### 规则 12: 转换双向绑定
+
+**基本绑定** - 保持不变:
+
+```svelte
+<input bind:value={text} />
+<input type="checkbox" bind:checked={agreed} />
+```
+
+**组件绑定** - 需要 $bindable:
+
+```svelte
+// 子组件
+<script>
+let { value = $bindable() } = $props();
+</script>
+<input bind:value />
+
+// 父组件
+<script>
+let text = $state('');
+</script>
+<CustomInput bind:value={text} />
+```
+
+---
+
+### 规则 13: 转换数据对象
+
+**模式匹配**:
+
+```svelte
+const data = { key: value };
+// 在模板中使用: {data.key}
+```
+
+**转换为**:
+
+```svelte
+const data = $state({ key: value });
+```
+
+**示例**:
+
+```svelte
+// ❌ 遗留或静态
+<script>
+const pageData = {
+  title: "My App",
+  description: "Welcome",
+  items: []
+};
+</script>
+
+// ✅ Runes
+<script>
+const pageData = $state({
+  title: "My App",
+  description: "Welcome",
+  items: []
+});
+</script>
+```
+
+---
+
+### 规则 14: 转换导入的数据
+
+**模式匹配**:
+
+```svelte
+import { data } from './constants';
+// 直接在模板使用
+```
+
+**转换为**:
+
+```svelte
+import { data as importedData } from './constants';
+const data = $state(importedData);
+```
+
+**示例**:
+
+```svelte
+// constants.ts
+export const gamesData = {
+  title: "Games",
+  items: [...]
+};
+
+// ❌ 遗留组件
+<script>
+import { gamesData } from './constants';
+</script>
+<h1>{gamesData.title}</h1>
+
+// ✅ Runes 组件
+<script>
+import { gamesData as imported } from './constants';
+const gamesData = $state(imported);
+</script>
+<h1>{gamesData.title}</h1>
+```
+
+---
+
+## 迁移检查清单
+
+应用这些规则时，确保：
+
+- [ ] 所有 `export let` 已转换为 `$props()` 解构
+- [ ] 所有响应式 `let` 声明使用 `$state()`
+- [ ] 所有 `$:` 派生值转换为 `$derived()`
+- [ ] 所有 `$:` 副作用转换为 `$effect()`
+- [ ] 所有 `on:event` 转换为 `onevent`
+- [ ] 所有 `<slot>` 转换为 `{@render}`
+- [ ] 所有 `createEventDispatcher` 转换为回调 props
+- [ ] 所有 `bind:this` 使用 `let` 而非 `const`
+- [ ] 所有生命周期函数考虑转换为 `$effect`
+- [ ] TypeScript 类型已更新（`Component` 而非 `SvelteComponent`）
+
+---
+
+## 自动迁移命令
+
+```bash
+# 使用 Svelte 官方迁移脚本
+npx sv migrate svelte-5
+
+# 或在 VS Code 中
+# 命令面板 → "Migrate Component to Svelte 5 Syntax"
+```
+
+---
+
+## 常见错误和解决方案
+
+### 错误 1: "Cannot bind to a non-bindable property"
+
+```svelte
+// ❌ 错误
+const ref = $state();
+<div bind:this={ref}>
+
+// ✅ 修复
+let ref = $state();
+<div bind:this={ref}>
+```
+
+### 错误 2: "Props are not bindable by default"
+
+```svelte
+// 子组件 - ❌ 错误
+let { value } = $props();
+
+// 子组件 - ✅ 修复
+let { value = $bindable() } = $props();
+
+// 父组件
+<Child bind:value={myValue} />
+```
+
+### 错误 3: "Cannot use $state in non-runes mode"
+
+确保组件中至少使用一个 rune，否则 Svelte 认为是遗留模式。
+
+### 错误 4: 混合使用 on: 和 onevent
+
+```svelte
+// ❌ 不要混用
+<button on:click={old} onclick={new}>
+
+// ✅ 选择一种
+<button onclick={handler}>
+```
+
+---
+
+## 完整迁移示例
+
+### Before (Svelte 4 遗留模式):
+
+```svelte
+<script>
+  import { createEventDispatcher } from 'svelte';
+  import { myStore } from './stores';
+
+  export let title;
+  export let count = 0;
+
+  const dispatch = createEventDispatcher();
+  let items = [];
+  let inputRef;
+
+  $: doubled = count * 2;
+  $: {
+    if (count > 10) {
+      alert('Too high!');
+    }
+  }
+  $: storeValue = $myStore;
+</script>
+
+<div bind:this={inputRef}>
+  <h1>{title}</h1>
+  <p>Count: {count}, Doubled: {doubled}</p>
+  <p>Store: {storeValue}</p>
+
+  <button on:click={() => count++}>
+    Increment
+  </button>
+
+  <button on:click={() => dispatch('reset')}>
+    Reset
+  </button>
+
+  <slot name="header" />
+
+  {#each items as item}
+    <slot name="item" {item} />
+  {/each}
+</div>
+```
+
+### After (Svelte 5 Runes 模式):
+
+```svelte
+<script>
+  import { myStore } from './stores';
+
+  let {
+    title,
+    count = 0,
+    onreset,
+    header,
+    item
+  } = $props();
+
+  let items = $state([]);
+  let inputRef = $state();
+
+  const doubled = $derived(count * 2);
+  const storeValue = $derived($myStore);
+
+  $effect(() => {
+    if (count > 10) {
+      alert('Too high!');
+    }
+  });
+</script>
+
+<div bind:this={inputRef}>
+  <h1>{title}</h1>
+  <p>Count: {count}, Doubled: {doubled}</p>
+  <p>Store: {storeValue}</p>
+
+  <button onclick={() => count++}>
+    Increment
+  </button>
+
+  <button onclick={() => onreset()}>
+    Reset
+  </button>
+
+  {@render header()}
+
+  {#each items as entry}
+    {@render item(entry)}
+  {/each}
+</div>
+```
+
+---
+
+## 性能优化提示
+
+1. **最小化 $effect 使用**: 只在需要副作用时使用
+2. **使用 $derived 而非 $effect**: 用于计算值
+3. **避免不必要的深度响应**: 只对需要的数据使用 `$state()`
+4. **批量更新**: 多个状态更新会自动批处理
+
+---
+
+## TypeScript 类型更新
+
+```typescript
+// ❌ 遗留
+import type { SvelteComponent } from 'svelte';
+export default class MyComponent extends SvelteComponent<{
+  prop: string;
+}> {}
+
+// ✅ Runes
+import type { Component } from 'svelte';
+export default MyComponent: Component<{
+  prop: string;
+}>;
+```
+
+---
+
+## 迁移优先级
+
+1. **立即转换**: 包含 `export let` 的组件
+2. **立即转换**: 包含 `$:` 语句的组件
+3. **立即转换**: 使用 `createEventDispatcher` 的组件
+4. **优先转换**: 使用 slots 的组件
+5. **按需转换**: 静态组件（为了一致性）
+
+---
+
+## 何时不应该迁移
+
+- 组件库需要向后兼容 Svelte 4
+- 正在等待第三方库更新
+- 项目即将废弃
+
+但建议尽早迁移以获得更好的性能和开发体验。
