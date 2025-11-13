@@ -674,11 +674,3 @@ export default function App() {
 }
 ```
 
-## Formatting & Lint (Ultracite)
-- 工具：Ultracite（内部使用 Biome + 规则集）。
-- 本仓库命令：`bunx ultracite fix`（修复/格式化）、`bunx ultracite check`（仅检查）。
-- 提交流程：pre-commit 自动执行 fix（lint-staged 仅作用于暂存文件）；pre-push 执行 check + typecheck。
-- 风格要点：
-  - 使用箭头函数、早返回，避免深层嵌套；
-  - 遵循 a11y 规则（按钮必须有 type、可交互元素可聚焦等）；
-  - 避免不必要的注释与复杂模式，优先可读性。

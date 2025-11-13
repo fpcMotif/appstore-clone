@@ -1,0 +1,10 @@
+{
+	"/": [],
+	"/apps": [],
+	"/arcade": [],
+	"/category/[slug]": [
+		"src/routes/category/[slug]/+page.ts"
+	],
+	"/games": [],
+	"/search": []
+}

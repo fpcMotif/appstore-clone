@@ -1,7 +1,9 @@
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useQuery } from "convex/react";
 import Sidebar from "./components/sidebar";
 import { allApps } from "./constants";
+import { api } from "./convex/_generated/api";
 import Action from "./pages/action";
 import Adventure from "./pages/adventure";
 import Arcade from "./pages/arcade";
@@ -70,6 +72,42 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<AppInfo[]>([]);
 
+  const todayShelves = useQuery(api.today.list);
+
+  // Build search index from Convex data + static data
+  const searchableApps = useMemo(() => {
+    const appMap = new Map<string, AppInfo>();
+
+    // Add static apps from other pages
+    for (const app of allApps) {
+      if (app.name && !appMap.has(app.name)) {
+        appMap.set(app.name, app);
+      }
+    }
+
+    // Add apps from Today shelves
+    if (todayShelves) {
+      for (const shelf of todayShelves) {
+        for (const card of shelf.cards) {
+          if (card.appInfo && card.appInfo.name) {
+            if (!appMap.has(card.appInfo.name)) {
+              appMap.set(card.appInfo.name, card.appInfo);
+            }
+          }
+          if (card.lockupList) {
+            for (const app of card.lockupList) {
+              if (app.name && !appMap.has(app.name)) {
+                appMap.set(app.name, app);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return Array.from(appMap.values());
+  }, [todayShelves]);
+
   useEffect(() => {
     const handleHashChange = () => {
       setRoute(window.location.hash || "#/");
@@ -93,7 +131,7 @@ const App: React.FC = () => {
     }
 
     const lowerCaseQuery = query.toLowerCase();
-    const results = allApps.filter(
+    const results = searchableApps.filter(
       (app) =>
         app.name.toLowerCase().includes(lowerCaseQuery) ||
         app.subtitle.toLowerCase().includes(lowerCaseQuery)
