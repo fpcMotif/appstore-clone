@@ -1,0 +1,5 @@
+{
+	"name": "App Store Today Clone",
+	"description": "A visually faithful clone of the Apple App Store's 'Today' page, built with React, TypeScript, and Tailwind CSS, featuring fluid animations and a responsive design to replicate the elegant user experience of the original.",
+	"requestFramePermissions": []
+}
