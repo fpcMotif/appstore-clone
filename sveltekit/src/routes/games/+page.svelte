@@ -1,12 +1,20 @@
 <script lang="ts">
+	import MainContent from "$lib/components/MainContent.svelte";
+	import Shelf from "$lib/components/Shelf.svelte";
+	import { gamesPageData } from "$lib/constants";
 
+	const pageData = $state(gamesPageData);
 </script>
 
-<div class="flex min-h-screen bg-background">
-	<Sidebar activeRoute={page.url.pathname} />
-	<MainContent>
-		<h1 class="mb-8 font-bold text-text-primary text-3xl">{gamesPageData.title}</h1>
-		{#each gamesPageData.shelves as shelf (shelf.id)}
+<MainContent>
+	<h1
+		class="font-[var(--font-weight-bold)] text-[var(--color-text-primary)] text-[var(--font-size-4xl)]"
+		style="margin-bottom: var(--spacing-header-margin)"
+	>
+		{pageData.title}
+	</h1>
+	<div class="gap-section space-y-12">
+		{#each pageData.shelves as shelf (shelf.id)}
 			<Shelf
 				title={shelf.title}
 				subtitle={shelf.subtitle}
@@ -14,5 +22,5 @@
 				cardLayout={shelf.cardLayout}
 			/>
 		{/each}
-	</MainContent>
-</div>
+	</div>
+</MainContent>

@@ -15,7 +15,7 @@ const {
 
 const SCROLL_PERCENTAGE = 0.8;
 
-const scrollRef: HTMLDivElement | undefined = $state();
+let scrollRef: HTMLDivElement | undefined = $state();
 let _canScrollLeft = $state(false);
 let _canScrollRight = $state(false);
 
